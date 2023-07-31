@@ -13,9 +13,327 @@ public class SavingAccountTest {
                 10_000,
                 5
         );
-
         account.add(3_000);
 
-        Assertions.assertEquals(2_000 + 3_000, account.getBalance());
+        int expected = 5_000;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void shouldPay() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = true;
+        boolean actual = account.pay(500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayIfAmountZero() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = account.pay(0);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayIfAmountNegative() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = account.pay(-500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayIfInitialBalanceEqualMinBalance() {
+        SavingAccount account = new SavingAccount(
+                1_500,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = true;
+        boolean actual = account.pay(500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayIfInitialBalanceLessThanMinBalance() {
+        SavingAccount account = new SavingAccount(
+                1_100,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = account.pay(500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayAmount() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+        account.pay(500);
+
+        int expected = 1_500;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayAmountIfBalanceEqualMinBalance() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+        account.pay(1_000);
+
+        int expected = 1_000;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayAmountIfBalanceLessThanMinBalance() {
+        SavingAccount account = new SavingAccount(
+                500,
+                1_000,
+                10_000,
+                5
+        );
+        account.pay(300);
+
+        int expected = 200;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAdd() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = true;
+        boolean actual = account.add(500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddIfAmountZero() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = account.add(0);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddIfAmountNegative() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = account.add(-500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddIfInitialBalanceEqualMaxBalance() {
+        SavingAccount account = new SavingAccount(
+                9_500,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = true;
+        boolean actual = account.add(500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddIfInitialBalanceMoreThanMaxBalance() {
+        SavingAccount account = new SavingAccount(
+                9_800,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = account.add(500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddAmountIfBalanceEqualMaxBalance() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+        account.add(8_000);
+
+        int expected = 10_000;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldYearChange() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        int expected = 100;
+        int actual = account.yearChange();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldYearChangeIfNotInt() {
+        SavingAccount account = new SavingAccount(
+                2_582,
+                1_000,
+                10_000,
+                5
+        );
+
+        int expected = 125;
+        int actual = account.yearChange();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldYearChangeIfRateZero() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                0
+        );
+
+        int expected = 0;
+        int actual = account.yearChange();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldYearChangeIfRateNegative() {
+        SavingAccount account = new SavingAccount(
+                2_000,
+                1_000,
+                10_000,
+                -5
+        );
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            account.yearChange();
+        });
+    }
+
+    @Test
+    public void shouldYearChangeIfInitialBalanceLessThanMinBalance() {
+        SavingAccount account = new SavingAccount(
+                500,
+                1_000,
+                10_000,
+                5
+        );
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            account.yearChange();
+        });
+    }
+
+    @Test
+    public void shouldYearChangeIfInitialBalanceMoreThanMaxBalance() {
+        SavingAccount account = new SavingAccount(
+                11_000,
+                1_000,
+                10_000,
+                5
+        );
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            account.yearChange();
+        });
+    }
+
+    @Test
+    public void shouldYearChangeIfMinBalanceMoreThanMaxBalance() {
+        SavingAccount account = new SavingAccount(
+                10_000,
+                11_000,
+                10_000,
+                5
+        );
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            account.yearChange();
+        });
+    }
+
+    @Test
+    public void shouldYearChangeIfMinBalanceEqualMaxBalance() {
+        SavingAccount account = new SavingAccount(
+                10_000,
+                10_000,
+                10_000,
+                5
+        );
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            account.yearChange();
+        });
     }
 }
