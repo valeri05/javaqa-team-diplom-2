@@ -114,5 +114,15 @@ public class CreditAccountTest {
         account.balance = -10_000;
         Assertions.assertEquals(-1_500, account.yearChange());
     }
+
+    @Test
+    public void shouldCreditLimitIfCreditLimitIsANegative () {
+        CreditAccount account = new CreditAccount(
+                0,
+                -5_000,
+                15
+        );
+        Assertions.assertThrows(IllegalArgumentException.class, () -> account.getCreditLimit());
+    }
 }
 
