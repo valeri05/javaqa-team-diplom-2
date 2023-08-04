@@ -124,22 +124,6 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldPayAmountIfBalanceLessThanMinBalance() {
-        SavingAccount account = new SavingAccount(
-                500,
-                1_000,
-                10_000,
-                5
-        );
-        account.pay(300);
-
-        int expected = 200;
-        int actual = account.getBalance();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
     public void shouldAdd() {
         SavingAccount account = new SavingAccount(
                 2_000,
@@ -269,71 +253,41 @@ public class SavingAccountTest {
 
     @Test
     public void shouldYearChangeIfRateNegative() {
-        SavingAccount account = new SavingAccount(
-                2_000,
-                1_000,
-                10_000,
-                -5
-        );
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            account.yearChange();
+            SavingAccount account = new SavingAccount (2_000, 1_000, 10_000, -5);
         });
     }
 
     @Test
     public void shouldYearChangeIfInitialBalanceLessThanMinBalance() {
-        SavingAccount account = new SavingAccount(
-                500,
-                1_000,
-                10_000,
-                5
-        );
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            account.yearChange();
+            SavingAccount account = new SavingAccount (500, 1_000, 10_000, 5);
         });
     }
 
     @Test
     public void shouldYearChangeIfInitialBalanceMoreThanMaxBalance() {
-        SavingAccount account = new SavingAccount(
-                11_000,
-                1_000,
-                10_000,
-                5
-        );
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            account.yearChange();
+            SavingAccount account = new SavingAccount (11_000, 1_000, 10_000, 5);
         });
     }
 
     @Test
     public void shouldYearChangeIfMinBalanceMoreThanMaxBalance() {
-        SavingAccount account = new SavingAccount(
-                10_000,
-                11_000,
-                10_000,
-                5
-        );
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            account.yearChange();
+            SavingAccount account = new SavingAccount (10_000, 11_000, 10_000, 5);
         });
     }
 
     @Test
     public void shouldYearChangeIfMinBalanceEqualMaxBalance() {
-        SavingAccount account = new SavingAccount(
-                10_000,
-                10_000,
-                10_000,
-                5
-        );
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            account.yearChange();
+            SavingAccount account = new SavingAccount (10_000, 10_000, 10_000, 5);
         });
     }
 }
